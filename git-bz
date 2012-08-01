@@ -807,6 +807,8 @@ def prompt(message):
         line = sys.stdin.readline().strip()
         if line == 'y' or line == 'Y':
             return True
+        elif line == 'a' or line == 'A':
+            return 'a'
         elif line == 'n' or line == 'N':
             return False
 
@@ -1478,13 +1480,17 @@ def do_apply(bug_reference):
     print "Bug %d - %s" % (bug.id, bug.short_desc)
     print
 
+    instruction = False
     for patch in bug.patches:
         if patch.status == 'committed' or patch.status == 'rejected':
             print "Skipping, %s: %s" % (patch.status, patch.description)
             continue
 
         print patch.description
-        if not prompt("Apply?"):
+        if not instruction == 'a':
+            instruction = prompt("Apply?")
+
+        if not instruction:
             continue
 
         print
