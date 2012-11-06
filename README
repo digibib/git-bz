@@ -1,0 +1,15 @@
+This version of git-bz has been customized for use by the Koha project.
+In particular, the following changes have been made compared to the "regular"
+git-bz available elsewhere:
+1) The authentication code now plays nicely with the Bugzilla instance on
+   bugs.koha-community.org
+2) Patches are applied using a 3-way merge
+3) The ability to update bug statuses to those statuses used by the Koha
+   project has been added
+4) It is possible to respond 'a' when asked about applying patches to apply
+   all remaining patches
+5) A -m/--mail option will send patches to the koha-patches mailing list when
+   attaching them to bugs
+6) A -s/--signoff option will sign off on patches as they are being applied
+   (NOTE THAT THIS OPTION IS INTENDED FOR USE WHEN PUSHING BRANCHES. DO
+    NOT USE THIS OPTION AS AN ALTERNATIVE TO ACTUALLY TESTING CODE.)
