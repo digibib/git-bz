@@ -1620,7 +1620,7 @@ def do_add_url(bug_reference, commit_or_revision_range):
 
     check_add_url(commits, bug.id, is_add_url=True)
 
-    print "Bug %d - %s" % (bug.id, bug.short_desc)
+    print "Bug %d - %s" % (bug.id, bug.short_desc.encode('ascii', 'ignore'))
     print bug.get_url()
     print
 
@@ -1707,7 +1707,7 @@ def do_apply(*args):
         for pid in patch_ids:
             patches.append(patches_by_id[pid])
     else:
-        print "Bug %d - %s" % (bug.id, bug.short_desc)
+        print "Bug %d - %s" % (bug.id, bug.short_desc.encode('ascii', 'ignore'))
         print
 
         for patch in bug.patches:
@@ -1725,7 +1725,7 @@ def do_apply(*args):
             return
         elif opt == "i":
             template = StringIO()
-            template.write("# Bug %d - %s\n\n" % (bug.id, bug.short_desc))
+            template.write("# Bug %d - %s\n\n" % (bug.id, bug.short_desc.encode('ascii', 'ignore')))
             for patch in bug.patches:
                 patches_by_id[patch.attach_id] = patch
                 if patch.status == 'committed' or patch.status == 'rejected':
@@ -1825,7 +1825,7 @@ def strip_bug_url(bug, commit_body):
 
 def edit_attachment_comment(bug, initial_description, initial_body):
     template = StringIO()
-    template.write("# Attachment to Bug %d - %s\n\n" % (bug.id, bug.short_desc))
+    template.write("# Attachment to Bug %d - %s\n\n" % (bug.id, bug.short_desc.encode('ascii', 'encode')))
     template.write(initial_description)
     template.write("\n\n")
     template.write(initial_body)
@@ -1980,7 +1980,7 @@ def do_attach(*args):
     # For the common case of one attachment don't prompt if we are going
     # to give them a chance to edit and abort anyways.
     if len(commits) > 1 or not global_options.edit:
-        print "Bug %d - %s" % (bug.id, bug.short_desc)
+        print "Bug %d - %s" % (bug.id, bug.short_desc.encode('ascii', 'ignore'))
         print
 
         for commit in reversed(commits):
@@ -2035,7 +2035,7 @@ def edit_bug(bug, applied_commits=None, fix_commits=None):
         mark_resolved = fix_commits is not None
 
     template = StringIO()
-    template.write("# Bug %d - %s - %s" % (bug.id, bug.short_desc, bug.bug_status))
+    template.write("# Bug %d - %s - %s" % (bug.id, bug.short_desc.encode('ascii', 'ignore'), bug.bug_status))
     if bug.bug_status == "RESOLVED":
         template.write(" - %s" % bug.resolution)
     template.write("\n")
@@ -2156,7 +2156,7 @@ def edit_bug(bug, applied_commits=None, fix_commits=None):
     depends = ' '.join(depends) if len(depends) > 0 else None
 
     if depends is None and patch_complexity is None and bug_status is None and resolution is None and len(changed_attachments) == 0 and comment == "":
-        print "No changes, not editing Bug %d - %s" % (bug.id, bug.short_desc)
+        print "No changes, not editing Bug %d - %s" % (bug.id, bug.short_desc.encode('ascii', 'ignore'))
         return False
 
     if fix_commits is not None:
@@ -2241,11 +2241,11 @@ def edit_bug(bug, applied_commits=None, fix_commits=None):
         attach_commits(bug, fix_commits, status='committed')
 
     if resolution is not None:
-        print "Resolved as %s bug %d - %s" % (resolution, bug.id, bug.short_desc)
+        print "Resolved as %s bug %d - %s" % (resolution, bug.id, bug.short_desc.encode('ascii', 'encode'))
     elif len(changed_attachments) > 0:
-        print "Updated bug %d - %s" % (bug.id, bug.short_desc)
+        print "Updated bug %d - %s" % (bug.id, bug.short_desc.encode('ascii', 'ignore'))
     else:
-        print "Added comment to bug %d - %s" % (bug.id, bug.short_desc)
+        print "Added comment to bug %d - %s" % (bug.id, bug.short_desc.encode('ascii', 'ignore'))
     print bug.get_url()
 
     return True
